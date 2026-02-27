@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact — Outfox Consulting LLC</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- DESKTOP: Left Panel -->
+  <div id="left-panel">
+
+    <!-- Logo: top-right aligned -->
+    <div id="logo-block">
+      <img src="assets/logo.png" alt="Outfox Consulting LLC" class="logo-img">
+    </div>
+
+    <!-- Contact Form: always open, fills remaining height -->
+    <div id="form-wrapper">
+      <form id="contact-form" class="contact-form" novalidate>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="firstName">First Name</label>
+            <input type="text" id="firstName" name="firstName" autocomplete="given-name" required>
+          </div>
+          <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <input type="text" id="lastName" name="lastName" autocomplete="family-name" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="phone">Phone *</label>
+          <input type="tel" id="phone" name="phone" autocomplete="tel" required>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email *</label>
+          <input type="email" id="email" name="email" autocomplete="email" required>
+        </div>
+
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="4"></textarea>
+        </div>
+
+        <!-- A2P Transactional Consent -->
+        <div class="consent-group">
+          <input type="checkbox" id="consentTransactional" name="consentTransactional" required>
+          <label for="consentTransactional">
+            By checking this box, you consent to receive service-related and transactional
+            text messages (such as appointment confirmations, follow-ups, and account
+            notifications) from Outfox Consulting LLC. Message frequency varies.
+            Message and data rates may apply. Reply STOP to unsubscribe at any time.
+            Reply HELP for assistance.
+          </label>
+        </div>
+
+        <!-- A2P Marketing Consent -->
+        <div class="consent-group">
+          <input type="checkbox" id="consentMarketing" name="consentMarketing">
+          <label for="consentMarketing">
+            By checking this box, you also consent to receive promotional and marketing
+            text messages from Outfox Consulting LLC. This consent is optional and not
+            required to receive our services. Message frequency varies. Message and data
+            rates may apply. Reply STOP to unsubscribe at any time. Reply HELP for assistance.
+          </label>
+        </div>
+
+        <div id="form-error" class="form-error" aria-live="polite"></div>
+
+        <button type="submit" class="submit-btn">Send Message</button>
+
+      </form>
+
+      <!-- Success state: hidden until submission confirmed -->
+      <div id="form-success" class="form-success" aria-live="polite" hidden>
+        <p>Message received. We'll be in touch shortly.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- DESKTOP: Right Panel Carousel -->
+  <div id="right-panel">
+    <div id="carousel-track">
+      <div class="car-slide"><img src="assets/images/photo1.jpg" alt=""></div>
+      <div class="car-slide"><img src="assets/images/photo2.jpg" alt=""></div>
+      <div class="car-slide"><img src="assets/images/photo3.jpg" alt=""></div>
+      <div class="car-slide"><img src="assets/images/photo4.jpg" alt=""></div>
+      <div class="car-slide"><img src="assets/images/photo5.jpg" alt=""></div>
+      <div class="car-slide"><img src="assets/images/photo6.jpg" alt=""></div>
+    </div>
+  </div>
+
+  <!-- MOBILE: Static Banner (hidden on desktop) -->
+  <div id="mobile-banner">
+    <img src="assets/images/photo1.jpg" alt="Outfox Consulting">
+  </div>
+
+  <script src="config.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
