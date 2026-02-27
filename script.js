@@ -1,10 +1,58 @@
-/* ---- CAROUSEL ---- */
+/* ---- CAROUSEL CONFIG ---- */
 
 const CAROUSEL_CONFIG = {
   pauseMs: 5000,
   scrollMs: 1350,
   ease: 'cubic-bezier(0.45, 0, 0.25, 1)'
 };
+
+/* ---- ASSET DISCOVERY ---- */
+
+async function fetchAssets() {
+  try {
+    const res = await fetch('/api/assets');
+    if (!res.ok) throw new Error();
+    return await res.json();
+  } catch (_) {
+    return { fonts: [], images: [] };
+  }
+}
+
+/* ---- FONT LOADING ---- */
+
+function getFormat(filename) {
+  const ext = filename.split('.').pop().toLowerCase();
+  return { woff2: 'woff2', woff: 'woff', ttf: 'truetype', otf: 'opentype' }[ext] || 'woff2';
+}
+
+function applyFont(fonts) {
+  // Prefer woff2, then woff, then first available
+  const file = fonts.find(f => /\.woff2$/i.test(f))
+    || fonts.find(f => /\.woff$/i.test(f))
+    || fonts[0];
+  if (!file) return;
+
+  const style = document.createElement('style');
+  style.textContent = `@font-face { font-family: 'Oil Can'; src: url('assets/fonts/${file}') format('${getFormat(file)}'); font-display: swap; }`;
+  document.head.appendChild(style);
+  const root = document.documentElement;
+  root.style.setProperty('--font-body',    "'Oil Can', Georgia, serif");
+  root.style.setProperty('--font-display', "'Oil Can', Georgia, serif");
+}
+
+/* ---- CAROUSEL ---- */
+
+function buildCarousel(images) {
+  const track  = document.getElementById('carousel-track');
+  const banner = document.querySelector('#mobile-banner img');
+  if (!track || !images.length) return;
+
+  track.innerHTML = images
+    .map(img => `<div class="car-slide"><img src="assets/images/${img}" alt=""></div>`)
+    .join('');
+
+  if (banner) banner.src = `assets/images/${images[0]}`;
+}
 
 function initCarousel() {
   const track = document.getElementById('carousel-track');
@@ -52,17 +100,16 @@ async function submitForm(payload) {
 
 function handleFormSubmit(e) {
   e.preventDefault();
-  const form = document.getElementById('contact-form');
+  const form    = document.getElementById('contact-form');
   const errorEl = document.getElementById('form-error');
-  const btn = form.querySelector('.submit-btn');
+  const btn     = form.querySelector('.submit-btn');
 
   errorEl.textContent = '';
 
-  // Validation
-  const firstName = form.firstName.value.trim();
-  const lastName = form.lastName.value.trim();
-  const phone = form.phone.value.trim();
-  const email = form.email.value.trim();
+  const firstName          = form.firstName.value.trim();
+  const lastName           = form.lastName.value.trim();
+  const phone              = form.phone.value.trim();
+  const email              = form.email.value.trim();
   const consentTransactional = form.consentTransactional.checked;
 
   if (!firstName || !lastName) {
@@ -92,7 +139,7 @@ function handleFormSubmit(e) {
     consentMarketing: form.consentMarketing.checked
   };
 
-  btn.disabled = true;
+  btn.disabled    = true;
   btn.textContent = 'Sending...';
 
   submitForm(payload)
@@ -102,14 +149,17 @@ function handleFormSubmit(e) {
     })
     .catch(() => {
       errorEl.textContent = 'Something went wrong. Please try again or contact us directly.';
-      btn.disabled = false;
+      btn.disabled    = false;
       btn.textContent = 'Send Message';
     });
 }
 
 /* ---- INIT ---- */
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+  const { fonts, images } = await fetchAssets();
+  applyFont(fonts);
+  buildCarousel(images);
   initCarousel();
   document.getElementById('contact-form')
     .addEventListener('submit', handleFormSubmit);

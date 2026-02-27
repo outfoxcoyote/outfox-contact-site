@@ -1,13 +1,3 @@
-/* ---- FONTS ---- */
-@font-face {
-  font-family: 'Oil Can';
-  src: url('assets/fonts/OilCan.woff2') format('woff2'),
-       url('assets/fonts/OilCan.woff') format('woff');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
 /* ---- RESET ---- */
 * {
   margin: 0;
@@ -24,8 +14,8 @@ html, body {
 
 /* ---- CSS VARIABLES ---- */
 :root {
-  --font-body: 'Oil Can', Georgia, serif;
-  --font-display: 'Oil Can', Georgia, serif;
+  --font-body: Georgia, serif;
+  --font-display: Georgia, serif;
   --color-accent: #c9a227;
   --bg-panel: #000000;
   --text-primary: #ffffff;
@@ -53,26 +43,29 @@ html, body {
 #logo-block {
   flex-shrink: 0;
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  padding: 24px 28px 0;
+  justify-content: flex-end;
+  padding: 20px 28px 0;
+}
+
+.logo-img {
+  max-height: 64px;
+  width: auto;
+  object-fit: contain;
+}
+
+#heading-block {
+  flex-shrink: 0;
+  padding: 6px 28px 0;
 }
 
 .contact-heading {
   font-family: var(--font-display);
-  font-size: clamp(3.2rem, 7.5vw, 5.2rem);
+  font-size: clamp(3rem, 8vw, 5rem);
   font-weight: 400;
   text-transform: uppercase;
   letter-spacing: 0.02em;
   color: var(--color-accent);
   line-height: 1;
-  padding-top: 4px;
-}
-
-.logo-img {
-  max-height: 80px;
-  width: auto;
-  object-fit: contain;
 }
 
 #form-wrapper {
@@ -167,7 +160,11 @@ html, body {
 
 @media (max-width: 768px) {
   #logo-block {
-    padding: 20px 20px 12px;
+    padding: 16px 20px 0;
+  }
+
+  #heading-block {
+    padding: 4px 20px 0;
   }
 
   #form-wrapper {
