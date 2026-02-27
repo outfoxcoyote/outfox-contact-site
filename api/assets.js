@@ -2,7 +2,7 @@ const fs   = require('fs');
 const path = require('path');
 
 module.exports = (req, res) => {
-  const root = process.cwd();
+  const root = path.resolve(__dirname, '..');
 
   function listDir(dir, extRe) {
     try {

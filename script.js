@@ -8,14 +8,35 @@ const CAROUSEL_CONFIG = {
 
 /* ---- ASSET DISCOVERY ---- */
 
+// Parse filenames from an HTTP directory-listing HTML response
+async function scanDir(url, extRe) {
+  try {
+    const res = await fetch(url);
+    if (!res.ok) return [];
+    const html = await res.text();
+    const matches = [...html.matchAll(/href="([^"?#/\\]+)"/gi)];
+    return [...new Set(matches.map(m => m[1]).filter(f => extRe.test(f)))];
+  } catch (_) {
+    return [];
+  }
+}
+
 async function fetchAssets() {
+  // Primary: Vercel API (works on Vercel / vercel dev)
   try {
     const res = await fetch('/api/assets');
-    if (!res.ok) throw new Error();
-    return await res.json();
-  } catch (_) {
-    return { fonts: [], images: [] };
-  }
+    if (res.ok) {
+      const data = await res.json();
+      if (data.images && data.images.length) return data;
+    }
+  } catch (_) {}
+
+  // Fallback: HTTP directory listing (works with most local servers)
+  const [images, fonts] = await Promise.all([
+    scanDir('assets/images/', /\.(jpe?g|png|webp)$/i),
+    scanDir('assets/fonts/',  /\.(woff2|woff|ttf|otf)$/i)
+  ]);
+  return { fonts, images };
 }
 
 /* ---- FONT LOADING ---- */

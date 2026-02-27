@@ -72,10 +72,11 @@ html, body {
 }
 
 .logo-img {
-  max-height: 56px;
+  max-height: 70px;
   flex-shrink: 0;
   width: auto;
   object-fit: contain;
+  margin-right: 10px;
 }
 
 #form-wrapper {
