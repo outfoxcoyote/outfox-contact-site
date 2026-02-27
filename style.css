@@ -1,3 +1,13 @@
+/* ---- FONTS ---- */
+@font-face {
+  font-family: 'Oil Can';
+  src: url('assets/fonts/OilCan.woff2') format('woff2'),
+       url('assets/fonts/OilCan.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* ---- RESET ---- */
 * {
   margin: 0;
@@ -14,8 +24,9 @@ html, body {
 
 /* ---- CSS VARIABLES ---- */
 :root {
-  --font-body: Georgia, serif;
-  --font-display: Georgia, serif;
+  --font-body: 'Oil Can', Georgia, serif;
+  --font-display: 'Oil Can', Georgia, serif;
+  --color-accent: #c9a227;
   --bg-panel: #000000;
   --text-primary: #ffffff;
   --text-secondary: #999999;
@@ -42,8 +53,20 @@ html, body {
 #logo-block {
   flex-shrink: 0;
   display: flex;
-  justify-content: flex-end;
-  padding: 24px 28px 16px;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 24px 28px 0;
+}
+
+.contact-heading {
+  font-family: var(--font-display);
+  font-size: clamp(3.2rem, 7.5vw, 5.2rem);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--color-accent);
+  line-height: 1;
+  padding-top: 4px;
 }
 
 .logo-img {
