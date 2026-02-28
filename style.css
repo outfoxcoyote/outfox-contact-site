@@ -85,13 +85,8 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow-y: auto;
+  overflow: hidden;
   padding: 20px 28px 32px;
-  scrollbar-width: none;        /* Firefox */
-}
-
-#form-wrapper::-webkit-scrollbar {
-  display: none;                /* Chrome / Safari */
 }
 
 /* ---- RIGHT PANEL ---- */
