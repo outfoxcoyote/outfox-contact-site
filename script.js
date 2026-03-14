@@ -110,7 +110,8 @@ function initCarousel() {
 /* ---- FORM SUBMISSION ---- */
 
 async function submitForm(payload) {
-  const response = await fetch(GHL_WEBHOOK_URL, {
+  const url = `https://api.hsforms.com/submissions/v3/integration/submit/${HS_PORTAL_ID}/${HS_FORM_GUID}`;
+  const response = await fetch(url, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload)
@@ -151,13 +152,19 @@ function handleFormSubmit(e) {
   }
 
   const payload = {
-    firstName,
-    lastName,
-    phone,
-    email,
-    message: form.message.value.trim(),
-    consentTransactional: true,
-    consentMarketing: form.consentMarketing.checked
+    fields: [
+      { name: 'firstname', value: firstName },
+      { name: 'lastname',  value: lastName },
+      { name: 'phone',     value: phone },
+      { name: 'email',     value: email },
+      { name: 'message',   value: form.message.value.trim() },
+      { name: 'sms_consent_transactional', value: 'true' },
+      { name: 'sms_consent_marketing',     value: String(form.consentMarketing.checked) }
+    ],
+    context: {
+      pageUri: window.location.href,
+      pageName: document.title
+    }
   };
 
   btn.disabled    = true;
